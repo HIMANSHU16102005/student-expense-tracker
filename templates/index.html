@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Expense Tracker</title>
+</head>
+
+<body>
+
+    <h1>Student Expense Tracker</h1>
+
+    <h2>Add Expense</h2>
+
+    <form method="POST" action="/add">
+        <label>Description:</label>
+        <input type="text" name="description" required>
+
+        <br><br>
+
+        <label>Category:</label>
+        <select name="category" required>
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Education">Education</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <br><br>
+
+        <label>Amount:</label>
+        <input type="number" name="amount" min="1" step="0.01" required>
+
+        <br><br>
+
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <h2>Expenses</h2>
+
+    {% if expenses %}
+        <ul>
+            {% for expense in expenses %}
+                <li>
+                    {{ expense.description }}
+                    - ₹{{ expense.amount }}
+                    - {{ expense.category }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No expenses added yet.</p>
+    {% endif %}
+
+    <footer>
+        Running Commit: {{ commit_id }}
+    </footer>
+</body>
+</html>
