@@ -1,5 +1,4 @@
 import pytest
-
 from app import app, expenses
 
 
@@ -49,4 +48,17 @@ def test_invalid_expense_rejected(client):
 
     assert response.status_code == 400
     assert len(expenses) == 0
-    
+
+
+def test_api_expenses(client):
+    expenses.append({
+        "description": "Lunch",
+        "category": "Food",
+        "amount": 150.0
+    })
+
+    response = client.get("/api/expenses")
+
+    assert response.status_code == 200
+    assert response.json[0]["description"] == "Lunch"
+    assert response.json[0]["amount"] == 150.0
