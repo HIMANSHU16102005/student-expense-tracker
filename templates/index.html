@@ -3,60 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Student Expense Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .expense-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body>
 
+<div class="container">
+
     <h1>Student Expense Tracker</h1>
 
-    <h2>Add Expense</h2>
+    <div class="card">
+        <h2>Add Expense</h2>
 
-    <form method="POST" action="/add">
-        <label>Description:</label>
-        <input type="text" name="description" required>
+        <form method="POST" action="/add">
 
-        <br><br>
+            <label for="description">Description</label>
+            <input
+                type="text"
+                id="description"
+                name="description"
+                placeholder="e.g. Lunch"
+                required
+            >
 
-        <label>Category:</label>
-        <select name="category" required>
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Other">Other</option>
-        </select>
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Education">Education</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Other">Other</option>
+            </select>
 
-        <br><br>
+            <label for="amount">Amount (₹)</label>
+            <input
+                type="number"
+                id="amount"
+                name="amount"
+                min="1"
+                step="0.01"
+                placeholder="e.g. 150"
+                required
+            >
 
-        <label>Amount:</label>
-        <input type="number" name="amount" min="1" step="0.01" required>
+            <button type="submit">Add Expense</button>
 
-        <br><br>
+        </form>
+    </div>
 
-        <button type="submit">Add Expense</button>
-    </form>
+    <div class="card">
 
-    <h2>Expenses</h2>
+        <h2>Expenses</h2>
 
-    {% if expenses %}
-        <ul>
-            {% for expense in expenses %}
-                <li>
-                    {{ expense.description }}
-                    - ₹{{ expense.amount }}
-                    - {{ expense.category }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No expenses added yet.</p>
-    {% endif %}
+        {% if expenses %}
 
-    <h3>Total Expenses: ₹{{ total }}</h3>
+            <ul class="expense-list">
+
+                {% for expense in expenses %}
+
+                    <li class="expense-item">
+                        <span>
+                            <strong>{{ expense.description }}</strong>
+                            - {{ expense.category }}
+                        </span>
+
+                        <span>
+                            ₹{{ expense.amount }}
+                        </span>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>No expenses added yet.</p>
+
+        {% endif %}
+
+        <div class="total">
+            Total Expenses: ₹{{ total }}
+        </div>
+
+    </div>
 
     <footer>
         Running Commit: {{ commit_id }}
     </footer>
+
+</div>
+
 </body>
 </html>
