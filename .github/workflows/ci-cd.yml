@@ -67,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy application
-        run: echo "Deployment stage will be configured with Render"
+         - name: Deploy to Render
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl --fail --silent --show-error "$deploy_url"
         
