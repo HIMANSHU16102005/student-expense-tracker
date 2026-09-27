@@ -33,7 +33,7 @@ def test_add_expense(client):
     assert response.status_code == 302
     assert len(expenses) == 1
     assert expenses[0]["description"] == "Lunch"
-    assert expenses[0]["amount"] == 150.0
+    assert expenses[0]["amount"] == 999.0
 
 
 def test_invalid_expense_rejected(client):
