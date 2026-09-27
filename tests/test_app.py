@@ -90,4 +90,3 @@ def test_non_numeric_amount_rejected(client):
 
     assert response.status_code == 400
     assert len(expenses) == 0
-
